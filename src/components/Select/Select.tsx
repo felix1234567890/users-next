@@ -4,9 +4,9 @@ import styles from "./Select.module.css";
 
 interface SelectProps {
   options: { label: string }[];
+  onInput: (label:string) => void;
 }
-export default function Select({ options }: SelectProps) {
-  const onInput = (label:string) => {};
+export default function Select({ options, onInput }: SelectProps) {
   const selectDiv = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState(
     options.length > 0 ? options[0].label : null

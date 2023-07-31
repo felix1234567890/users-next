@@ -1,0 +1,14 @@
+.sortBy {
+  border: 2px solid #566273;
+  padding: 1rem;
+  max-width: 25rem;
+  margin: auto;
+}
+.sortBy__span {
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+  margin-bottom: 1rem;
+}
+
