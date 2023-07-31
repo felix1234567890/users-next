@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Header from '@/components/Header/Header'
 import Filter from '@/components/Filter/Filter'
+import Pagination from '@/components/Pagination/Pagination'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
       <Header title='Users Search App'/>
       <Filter />
+      <Pagination pageCount={6} pageNumber={1}/>
         {children}</body>
     </html>
   )
