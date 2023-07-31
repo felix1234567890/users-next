@@ -5,6 +5,7 @@ import Header from "@/components/Header/Header";
 import Filter from "@/components/Filter/Filter";
 import Pagination from "@/components/Pagination/Pagination";
 import UserItem from "@/components/UserItem/UserItem";
+import UsersList from "@/components/UsersList/UsersList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,26 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header title="Users Search App" />
         <Filter />
-        <div className="container">
-          <section className="card-row">
-            <UserItem
-              name="Nando Jeurissen"
-              email="nando.jeurissen@example.com"
-              country="Netherlands"
-              photo="https://randomuser.me/api/portraits/men/10.jpg"
-              gender="male"
-              age={52}
-            />
-            <UserItem
-              name="Nando Jeurissen"
-              email="nando.jeurissen@example.com"
-              country="Netherlands"
-              photo="https://randomuser.me/api/portraits/men/10.jpg"
-              gender="male"
-              age={52}
-            />
-          </section>
-        </div>
+        <UsersList />
         <Pagination pageCount={6} pageNumber={1} />
         {children}
       </body>
