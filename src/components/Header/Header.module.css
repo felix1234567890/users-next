@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .header__title {
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .header__search input {
+    min-width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    outline: none;
+    font-size: 16px;
+    text-align: center;
+  }
