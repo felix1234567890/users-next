@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import Header from "@/components/Header/Header";
 import Filter from "@/components/Filter/Filter";
 import Pagination from "@/components/Pagination/Pagination";
-import UserItem from "@/components/UserItem/UserItem";
 import UsersList from "@/components/UsersList/UsersList";
 
 const inter = Inter({ subsets: ["latin"] });

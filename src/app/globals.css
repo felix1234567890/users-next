@@ -19,22 +19,3 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-.card-row {
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-.card-row a {
-  cursor: pointer;
-  text-decoration: none;
-}
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-}
-.container h1 {
-  text-align: center;
-}
