@@ -7,9 +7,9 @@ export default async function UsersList() {
   return (
     <div className={styles.container}>
       <section className={styles.card__row}>
-        {users.map((user, i) => (
-          <UserItem user={user} key={i}/>
-        ))}
+        {users.map((user, i) => {
+          return <UserItem user={user} index={i + 1} />;
+        })}
       </section>
     </div>
   );

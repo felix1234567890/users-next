@@ -3,13 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./Select.module.css";
 
 interface SelectProps {
-  options: { label: string }[];
-  onInput: (label:string) => void;
+  options: { label: string; value: string }[];
+  onInput: (label: string) => void;
 }
 export default function Select({ options, onInput }: SelectProps) {
   const selectDiv = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState(
-    options.length > 0 ? options[0].label : null
+  const [selected, setSelected] = useState<string>(
+    options.length > 0 ? options[0].label : ""
   );
   const [open, setOpen] = useState(false);
   useEffect(() => {
