@@ -2,9 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header/Header";
-import Filter from "@/components/Filter/Filter";
-import Pagination from "@/components/Pagination/Pagination";
-import UsersList from "@/components/UsersList/UsersList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +19,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header title="Users Search App" />
-        <Filter />
-        <UsersList />
-        <Pagination pageCount={6} pageNumber={1} />
         {children}
       </body>
     </html>
