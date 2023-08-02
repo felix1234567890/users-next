@@ -1,23 +1,18 @@
 'use client'
+import { Dispatch, SetStateAction } from "react";
 import Select from "../Select/Select";
-import styles from './Filter.module.css'
+import styles from "./Filter.module.css";
 
-export default function Filter() {
-    const options =  [
-      { value: '', label: 'None' },
-      { value: 'asc', label: 'Age - ascending' },
-      { value: 'desc', label: 'Age - descending' },
-      { value: 'under40', label: 'Age - under 40' },
-      { value: 'over40', label: 'Age -over 40' },
-      { value: 'male', label: 'Male' },
-      { value: 'female', label: 'Female' },
-    ]
+interface FilterProps {
+  selected: string;
+  setSelected: Dispatch<SetStateAction<{ value: string; label: string; }>>
+}
+export default function Filter({ selected, setSelected }: FilterProps) {
 
-    const onInput = (label:string) => console.log(label)
   return (
     <div className={styles.sortBy}>
       <span className={styles.sortBy__span}>Sort by</span>
-        <Select options={options} onInput={onInput} />
+      <Select selected={selected} setSelected={setSelected} />
     </div>
   );
 }

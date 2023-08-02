@@ -15,7 +15,7 @@ interface UserItemProps {
 
 const UserItem = ({ user, index }: UserItemProps) => {
   return (
-    <Link  style={{textDecoration: 'none'}} href={`/${index}`}>
+    <Link className={styles.link} href={`/${index}`}>
       <article className={styles.card}>
         {user.photo && <img src={user.photo} alt="" />}
         <h3 className={styles.user__name}>{user.name}</h3>

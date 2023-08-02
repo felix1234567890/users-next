@@ -1,21 +1,18 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { options } from "@/app/page";
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import styles from "./Select.module.css";
 
 interface SelectProps {
-  options: { label: string; value: string }[];
-  onInput: (label: string) => void;
+  selected: string;
+  setSelected: Dispatch<SetStateAction<{ value: string; label: string; }>>
 }
-export default function Select({ options, onInput }: SelectProps) {
+export default function Select({ selected, setSelected }: SelectProps) {
   const selectDiv = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState<string>(
-    options.length > 0 ? options[0].label : ""
-  );
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
-    selected && onInput(selected);
     const handleClickOutside = (event: MouseEvent) => {
-      const el = document.getElementsByClassName("custom-select")[0];
       if (!selectDiv.current?.contains(event.target as Node)) {
         setOpen(false);
       }
@@ -25,6 +22,7 @@ export default function Select({ options, onInput }: SelectProps) {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
   return (
     <div
       ref={selectDiv}
@@ -38,19 +36,20 @@ export default function Select({ options, onInput }: SelectProps) {
         {selected}
       </div>
       <div className={`${styles.items} ${!open && `${styles.selectHide}`}`}>
-        {options.map((option, i) => (
-          <div
-            key={i}
-            className={styles.item}
-            onClick={() => {
-              setSelected(option.label);
-              setOpen(false);
-              onInput(option.label);
-            }}
-          >
-            {option.label}
-          </div>
-        ))}
+        {options.map((option, i) => {
+          return (
+            <div
+              key={i}
+              className={styles.item}
+              onClick={() => {
+                setSelected({value: option.value, label: option.label});
+                setOpen(false);
+              }}
+            >
+              {option.label}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
