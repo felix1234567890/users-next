@@ -3,6 +3,7 @@ import styles from "./UserItem.module.css";
 
 interface UserItemProps {
   user: {
+    id: string;
     name: string;
     email: string;
     country: string;
@@ -13,9 +14,9 @@ interface UserItemProps {
   index: number;
 }
 
-const UserItem = ({ user, index }: UserItemProps) => {
+const UserItem = ({ user }: UserItemProps) => {
   return (
-    <Link className={styles.link} href={`/${index}`}>
+    <Link className={styles.link} href={`/${user.id}`}>
       <article className={styles.card}>
         {user.photo && <img src={user.photo} alt="" />}
         <h3 className={styles.user__name}>{user.name}</h3>
