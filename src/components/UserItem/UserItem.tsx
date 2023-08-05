@@ -1,4 +1,6 @@
+import { User } from "@prisma/client";
 import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 import styles from "./UserItem.module.css";
 
 interface UserItemProps {
@@ -12,17 +14,19 @@ interface UserItemProps {
     age: number;
   };
   index: number;
+  setUsers: Dispatch<SetStateAction<User[]>>
+  users:User[]
 }
 
-const UserItem = ({ user }: UserItemProps) => {
+const UserItem = ({ user, setUsers, users}: UserItemProps) => {
   const deleteUser = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
     const { id } = user;
-    const userData = await fetch(`/api/users/${id}`, { method: "DELETE" });
-    const result = await userData.json();
-    console.log(result);
+    await fetch(`/api/users/${id}`, { method: "DELETE" });
+    const filtered  = users.filter(({id}) =>id !== user.id)
+    setUsers(filtered)
   };
   return (
     <Link className={styles.link} href={`/${user.id}`}>

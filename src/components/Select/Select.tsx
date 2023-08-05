@@ -46,7 +46,7 @@ export default function Select({
               key={i}
               className={styles.item}
               onClick={() => {
-                setSelected?.({ value: option.value, label: option.label });
+                typeof selected === 'number' ? setSelected(option.value): setSelected?.({ value: option.value, label: option.label });
                 setOpen(false);
               }}
             >

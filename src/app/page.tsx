@@ -2,6 +2,7 @@
 import Filter from "@/components/Filter/Filter";
 import Pagination from "@/components/Pagination/Pagination";
 import UsersList from "@/components/UsersList/UsersList";
+import { User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { usePageContext } from "./layout";
 
@@ -25,7 +26,7 @@ export default function Home() {
     label: options[0].label,
   });
   const [perPage, setPerPage] = useState<number>(6);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [skip, setSkip] = useState<number>(0);
   const search = usePageContext();
 
@@ -48,7 +49,7 @@ export default function Home() {
         perPage={perPage}
         setPerPage={setPerPage}
       />
-      <UsersList users={users} />
+      <UsersList users={users} setUsers={setUsers}/>
       <Pagination pageCount={perPage} pageNumber={skip} changePage={setSkip} />
     </>
   );
