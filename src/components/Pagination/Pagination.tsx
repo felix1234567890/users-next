@@ -22,7 +22,7 @@ export default function Pagination({
           Previous
         </button>
       )}
-      {pageNumber < pageCount && (
+      {pageNumber + 1 < pageCount && (
         <button
           className={styles.button}
           onClick={() => changePage(pageNumber + 1)}
