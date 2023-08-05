@@ -1,15 +1,15 @@
 import db from "@/lib/db";
-import { User } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { Gender, User } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   let users: User[] = [];
-  const filter = req.query?.filter ?? "";
+  const { searchParams } = new URL(req.url);
+  const filter = searchParams.get("filter");
+  const perPage = Number(searchParams.get("perPage"))
+  const skip = Number(searchParams.get("skip"))
+
   switch (true) {
-    case filter === "":
-      users = await db.user.findMany();
-      break;
     case filter === "asc":
     case filter === "desc":
       users = await db.user.findMany({
@@ -28,6 +28,18 @@ export async function GET(req: NextApiRequest) {
         orderBy: { age: "asc" },
       });
       break;
+    case filter === "male":
+      users = await db.user.findMany({
+        where: { gender: Gender.male },
+      });
+      break;
+    case filter === "female":
+      users = await db.user.findMany({
+        where: { gender: Gender.female },
+      });
+      break;
+    default:
+      users = await db.user.findMany({skip: skip * perPage, take: perPage });
   }
   return NextResponse.json(users);
 }

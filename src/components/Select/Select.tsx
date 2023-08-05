@@ -3,11 +3,16 @@ import { options } from "@/app/page";
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import styles from "./Select.module.css";
 
-interface SelectProps {
-  selected: string;
-  setSelected: Dispatch<SetStateAction<{ value: string; label: string; }>>
+export interface SelectProps {
+  selected: string | number;
+  setSelected: Dispatch<
+    SetStateAction<any>
+  >;
 }
-export default function Select({ selected, setSelected }: SelectProps) {
+export default function Select({
+  selected,
+  setSelected,
+}: Partial<SelectProps>) {
   const selectDiv = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -42,7 +47,7 @@ export default function Select({ selected, setSelected }: SelectProps) {
               key={i}
               className={styles.item}
               onClick={() => {
-                setSelected({value: option.value, label: option.label});
+                setSelected?.({ value: option.value, label: option.label });
                 setOpen(false);
               }}
             >

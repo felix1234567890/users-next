@@ -19,25 +19,34 @@ export const options = [
 ];
 
 export default function Home() {
-  const [selected, setSelected] = useState({value: options[0].value, label:options[0].label});
+  const [selected, setSelected] = useState({
+    value: options[0].value,
+    label: options[0].label,
+  });
+  const [perPage, setPerPage] = useState<number>(6);
   const [users, setUsers] = useState([]);
+  const [skip, setSkip] = useState<number>(0);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const url = selected.value ? `/api/users?filter=${selected.value}` :'/api/users'
-      try {
-        const usersData = await fetch(url);
-        const users = await usersData.json();
-        setUsers(users);
-      } catch (error) {}
+      let url = `/api/users?perPage=${perPage}&skip=${skip}`;
+      url = selected.value ? `${url}&filter=${selected.value}`: url
+      const usersData = await fetch(url);
+      const users = await usersData.json();
+      setUsers(users);
     };
     fetchUsers();
-  }, [selected]);
+  }, [selected, skip, perPage]);
   return (
     <>
-      <Filter selected={selected.label} setSelected={setSelected} />
+      <Filter
+        selected={selected.label}
+        setSelected={setSelected}
+        perPage={perPage}
+        setPerPage={setPerPage}
+      />
       <UsersList users={users} />
-      <Pagination pageCount={6} pageNumber={1} />
+      <Pagination pageCount={perPage} pageNumber={skip} changePage={setSkip} />
     </>
   );
 }
