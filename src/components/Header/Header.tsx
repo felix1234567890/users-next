@@ -1,12 +1,13 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
   title: string;
+  search: string
+  setSearch: Dispatch<SetStateAction<string>>
 }
-const Header = ({ title }: HeaderProps) => {
-  const [search, setSearch] = useState<string>();
+const Header = ({ title, search, setSearch }: HeaderProps) => {
   const onChange = (event:ChangeEvent<HTMLInputElement>) => {
       setSearch(event.target.value)
   }

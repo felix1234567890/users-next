@@ -1,18 +1,17 @@
 "use client";
-import { options } from "@/app/page";
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import styles from "./Select.module.css";
 
 export interface SelectProps {
   selected: string | number;
-  setSelected: Dispatch<
-    SetStateAction<any>
-  >;
+  setSelected: Dispatch<SetStateAction<any>>;
+  options: Array<{ label: string; value: string | number }>;
 }
 export default function Select({
   selected,
   setSelected,
-}: Partial<SelectProps>) {
+  options
+}: SelectProps) {
   const selectDiv = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 

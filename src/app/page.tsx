@@ -3,6 +3,7 @@ import Filter from "@/components/Filter/Filter";
 import Pagination from "@/components/Pagination/Pagination";
 import UsersList from "@/components/UsersList/UsersList";
 import { useEffect, useState } from "react";
+import { usePageContext } from "./layout";
 
 export interface Option {
   label: string;
@@ -26,17 +27,19 @@ export default function Home() {
   const [perPage, setPerPage] = useState<number>(6);
   const [users, setUsers] = useState([]);
   const [skip, setSkip] = useState<number>(0);
+  const search = usePageContext();
 
   useEffect(() => {
     const fetchUsers = async () => {
       let url = `/api/users?perPage=${perPage}&skip=${skip}`;
-      url = selected.value ? `${url}&filter=${selected.value}`: url
+      url = search ? `${url}&search=${search}` : url;
+      url = selected.value ? `${url}&filter=${selected.value}` : url;
       const usersData = await fetch(url);
       const users = await usersData.json();
       setUsers(users);
     };
     fetchUsers();
-  }, [selected, skip, perPage]);
+  }, [selected, skip, perPage, search]);
   return (
     <>
       <Filter

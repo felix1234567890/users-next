@@ -1,4 +1,5 @@
 "use client";
+import { options } from "@/app/page";
 import { Dispatch, SetStateAction } from "react";
 import Select from "../Select/Select";
 import styles from "./Filter.module.css";
@@ -10,6 +11,12 @@ export interface FilterProps {
   setPerPage: Dispatch<SetStateAction<number>>;
 }
 
+const optionsPerPage = [
+  { value: 3, label: "3" },
+  { value: 6, label: "6" },
+  { value: 9, label: "9" },
+];
+
 export default function Filter({
   selected,
   setSelected,
@@ -19,8 +26,8 @@ export default function Filter({
   return (
     <div className={styles.sortBy}>
       <span className={styles.sortBy__span}>Sort by</span>
-      <Select selected={selected} setSelected={setSelected} />
-      <Select selected={perPage} setSelected={setPerPage} />
+      <Select options={options} selected={selected} setSelected={setSelected} />
+      <Select options={optionsPerPage} selected={perPage} setSelected={setPerPage} />
     </div>
   );
 }

@@ -1,25 +1,39 @@
+'use client'
 import "./globals.css";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header/Header";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Users Search App",
-  description: "Search users by country",
+const PageContext = createContext("");
+export function usePageContext() {
+  return useContext(PageContext);
+}
+const PageContextContainer = ({
+  children,
+  search,
+}: {
+  children: ReactNode;
+  search: string;
+}) => {
+  return <PageContext.Provider value={search}>{children}</PageContext.Provider>;
 };
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [search, setSearch] = useState("");
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header title="Users Search App" />
-        {children}
+        <Header
+          title="Users Search App"
+          search={search}
+          setSearch={setSearch}
+        />
+        <PageContextContainer search={search}>{children}</PageContextContainer>
       </body>
     </html>
   );

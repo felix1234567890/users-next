@@ -6,9 +6,9 @@ export async function GET(req: NextRequest) {
   let users: User[] = [];
   const { searchParams } = new URL(req.url);
   const filter = searchParams.get("filter");
-  const perPage = Number(searchParams.get("perPage"))
-  const skip = Number(searchParams.get("skip"))
-
+  const perPage = Number(searchParams.get("perPage"));
+  const search = searchParams.get("search");
+  const skip = Number(searchParams.get("skip"));
   switch (true) {
     case filter === "asc":
     case filter === "desc":
@@ -39,7 +39,13 @@ export async function GET(req: NextRequest) {
       });
       break;
     default:
-      users = await db.user.findMany({skip: skip * perPage, take: perPage });
+      if (search) {
+        users = await db.user.findMany({
+          where: { country: { contains: search, mode: "insensitive" } },
+        });
+        break;
+      }
+      users = await db.user.findMany({ skip: skip * perPage, take: perPage });
   }
   return NextResponse.json(users);
 }
