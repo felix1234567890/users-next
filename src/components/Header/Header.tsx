@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import styles from "./Header.module.css";
 
 interface HeaderProps {

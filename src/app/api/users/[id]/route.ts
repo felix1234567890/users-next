@@ -10,3 +10,12 @@ export async function GET(
   const user = await db.user.findFirstOrThrow({ where: { id } });
   return NextResponse.json({ user });
 }
+
+export async function DELETE(
+  _req: NextApiRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  const user = await db.user.delete({ where: { id } });
+  return NextResponse.json({ user });
+}

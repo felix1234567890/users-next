@@ -15,6 +15,15 @@ interface UserItemProps {
 }
 
 const UserItem = ({ user }: UserItemProps) => {
+  const deleteUser = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    const { id } = user;
+    const userData = await fetch(`/api/users/${id}`, { method: "DELETE" });
+    const result = await userData.json();
+    console.log(result);
+  };
   return (
     <Link className={styles.link} href={`/${user.id}`}>
       <article className={styles.card}>
@@ -33,6 +42,14 @@ const UserItem = ({ user }: UserItemProps) => {
           <p>
             <strong>Age:</strong> {user.age}
           </p>
+          <button
+            className={styles.button}
+            onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+              deleteUser(event)
+            }
+          >
+            Delete
+          </button>
         </div>
       </article>
     </Link>
