@@ -1,6 +1,8 @@
+import { deleteUserAction } from "@/lib/actions";
 import { User } from "@prisma/client";
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useTransition } from "react";
 import styles from "./UserItem.module.css";
 
 interface UserItemProps {
@@ -14,20 +16,21 @@ interface UserItemProps {
     age: number;
   };
   index: number;
-  setUsers: Dispatch<SetStateAction<User[]>>
-  users:User[]
+  setUsers: Dispatch<SetStateAction<User[]>>;
+  users: User[];
 }
 
-const UserItem = ({ user, setUsers, users}: UserItemProps) => {
-  const deleteUser = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    const { id } = user;
-    await fetch(`/api/users/${id}`, { method: "DELETE" });
-    const filtered  = users.filter(({id}) =>id !== user.id)
-    setUsers(filtered)
-  };
+const UserItem = ({ user, setUsers, users }: UserItemProps) => {
+  const [_, startTransition] = useTransition();
+  // const deleteUser = async (
+  //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  // ) => {
+  //   event.preventDefault();
+  //   const { id } = user;
+  //   await fetch(`/api/users/${id}`, { method: "DELETE" });
+  //   const filtered = users.filter(({ id }) => id !== user.id);
+  //   setUsers(filtered);
+  // };
   return (
     <Link className={styles.link} href={`/${user.id}`}>
       <article className={styles.card}>
@@ -46,14 +49,21 @@ const UserItem = ({ user, setUsers, users}: UserItemProps) => {
           <p>
             <strong>Age:</strong> {user.age}
           </p>
-          <button
-            className={styles.button}
-            onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-              deleteUser(event)
-            }
-          >
-            Delete
-          </button>
+          <form>
+            <button
+              className={styles.button}
+              onClick={(
+                event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+              ) => {
+                event.preventDefault();
+                startTransition(() => {
+                  deleteUserAction({ id: user.id, path: "/" });
+                });
+              }}
+            >
+              Delete
+            </button>
+          </form>
         </div>
       </article>
     </Link>
