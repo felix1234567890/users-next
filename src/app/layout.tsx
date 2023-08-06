@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header/Header";
 import { createContext, ReactNode, useContext, useState } from "react";
+import { TrpcProvider } from "@/utils/trpc-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,11 @@ export default function RootLayout({
           search={search}
           setSearch={setSearch}
         />
-        <PageContextContainer search={search}>{children}</PageContextContainer>
+        <TrpcProvider>
+          <PageContextContainer search={search}>
+            {children}
+          </PageContextContainer>
+        </TrpcProvider>
       </body>
     </html>
   );

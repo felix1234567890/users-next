@@ -2,6 +2,7 @@
 import Filter from "@/components/Filter/Filter";
 import Pagination from "@/components/Pagination/Pagination";
 import UsersList from "@/components/UsersList/UsersList";
+import { trpc } from "@/utils/trpc";
 import { User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { usePageContext } from "./layout";
@@ -26,21 +27,25 @@ export default function Home() {
     label: options[0].label,
   });
   const [perPage, setPerPage] = useState<number>(6);
-  const [users, setUsers] = useState<User[]>([]);
+  // const [users, setUsers] = useState<User[]>([]);
   const [skip, setSkip] = useState<number>(0);
   const search = usePageContext();
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      let url = `/api/users?perPage=${perPage}&skip=${skip}`;
-      url = search ? `${url}&search=${search}` : url;
-      url = selected.value ? `${url}&filter=${selected.value}` : url;
-      const usersData = await fetch(url);
-      const users = await usersData.json();
-      setUsers(users);
-    };
-    fetchUsers();
-  }, [selected, skip, perPage, search]);
+  let { data: users, isLoading, isFetching } = trpc.getUsers.useQuery();
+  // setUsers(usersData)
+  // useEffect(() => {
+    
+  //   // const fetchUsers = async () => {
+  //   //   let url = `/api/users?perPage=${perPage}&skip=${skip}`;
+  //   //   url = search ? `${url}&search=${search}` : url;
+  //   //   url = selected.value ? `${url}&filter=${selected.value}` : url;
+  //   //   const usersData = await fetch(url);
+  //   //   const users = await usersData.json();
+  //     setUsers(usersData);
+  //   // fetchUsers();
+  // }, [selected, skip, perPage, search]);
+  if(isLoading || isFetching) {
+    return <span className="loader"></span>
+  }
   return (
     <>
       <Filter
@@ -49,7 +54,7 @@ export default function Home() {
         perPage={perPage}
         setPerPage={setPerPage}
       />
-      <UsersList users={users} setUsers={setUsers}/>
+      <UsersList users={users} setUsers={()=>{}}/>
       <Pagination pageCount={perPage} pageNumber={skip} changePage={setSkip} />
     </>
   );

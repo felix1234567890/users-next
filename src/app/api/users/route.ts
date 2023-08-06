@@ -4,11 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   let users: User[] = [];
-  const { searchParams } = new URL(req.url);
-  const filter = searchParams.get("filter");
-  const perPage = Number(searchParams.get("perPage"));
-  const search = searchParams.get("search");
-  const skip = Number(searchParams.get("skip"));
+  const filter = req.nextUrl.searchParams.get("filter");
+  const perPage = Number(req.nextUrl.searchParams.get("perPage"));
+  const search = req.nextUrl.searchParams.get("search");
+  const skip = Number(req.nextUrl.searchParams.get("skip"));
   let query: Prisma.UserFindManyArgs = { skip: skip * perPage, take: perPage };
   if (search) {
     query = {

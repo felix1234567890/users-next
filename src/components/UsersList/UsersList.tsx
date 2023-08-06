@@ -11,7 +11,7 @@ export default function UsersList({ users, setUsers}: UsersListProps) {
   return (
     <div className={styles.container}>
       <section className={styles.card__row}>
-        {users.map((user, i) => {
+        {users?.map((user, i) => {
           return <UserItem user={user} users={users} setUsers={setUsers} index={i + 1} key={i} />;
         })}
       </section>
