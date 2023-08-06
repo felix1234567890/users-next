@@ -13,7 +13,10 @@ export const appRouter = t.router({
     return ctx.db.user.findMany()  }),
     getUser: t.procedure.input(object({userId:string()})).query(({input, ctx}:any)=>{
         return ctx.db.user.findFirst({where:{id:input.userId}})
-    })
+    }),
+    deleteUser: t.procedure.input(object({userId:string()})).mutation(({input, ctx}:any)=>{
+        return ctx.db.user.delete({where:{id:input.userId}})
+    }),
 });
 
 export type AppRouter = typeof appRouter;

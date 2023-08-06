@@ -1,4 +1,5 @@
 import { deleteUserAction } from "@/lib/actions";
+import { trpc } from "@/utils/trpc";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,9 @@ interface UserItemProps {
 }
 
 const UserItem = ({ user, setUsers, users }: UserItemProps) => {
+  const deleteUser = trpc.deleteUser.useMutation();
+  const utils = trpc.useContext();
+
   const [_, startTransition] = useTransition();
   // const deleteUser = async (
   //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -56,9 +60,10 @@ const UserItem = ({ user, setUsers, users }: UserItemProps) => {
                 event: React.MouseEvent<HTMLButtonElement, MouseEvent>
               ) => {
                 event.preventDefault();
-                startTransition(() => {
-                  deleteUserAction({ id: user.id, path: "/" });
-                });
+                deleteUser.mutate({userId: user.id}, {onSuccess: ()=> utils.getUsers.invalidate()})
+                // startTransition(() => {
+                //   deleteUserAction({ id: user.id, path: "/" });
+                // });
               }}
             >
               Delete
